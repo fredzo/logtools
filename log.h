@@ -2,7 +2,7 @@
 *                                                                                                                      *
 * logtools                                                                                                             *
 *                                                                                                                      *
-* Copyright (c) 2016-2025 Andrew D. Zonenberg and contributors                                                         *
+* Copyright (c) 2016-2026 Andrew D. Zonenberg and contributors                                                         *
 * All rights reserved.                                                                                                 *
 *                                                                                                                      *
 * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the     *
@@ -122,7 +122,7 @@ public:
 
 protected:
 
-	std::string WrapString(std::string str);
+	std::string WrapString(const std::string& str);
 	virtual void PreprocessLine(std::string& line);
 
 	/// @brief Number of spaces in one indentation
@@ -171,7 +171,7 @@ protected:
 		const std::string& search,
 		const std::string& before,
 		const std::string& after,
-		std::string subject);
+		const std::string& subject);
 };
 
 /**
@@ -183,6 +183,10 @@ class FILELogSink : public LogSink
 public:
 	FILELogSink(FILE *f, bool line_buffered = false, Severity min_severity = Severity::VERBOSE);
 	~FILELogSink() override;
+
+	//not copyable or assignable
+	FILELogSink(const FILELogSink& rhs) =delete;
+	FILELogSink& operator=(const FILELogSink& rhs) =delete;
 
 	void Log(Severity severity, const std::string &msg) override;
 	void Log(Severity severity, const char *format, va_list va) override;

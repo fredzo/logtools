@@ -2,7 +2,7 @@
 *                                                                                                                      *
 * logtools                                                                                                             *
 *                                                                                                                      *
-* Copyright (c) 2016-2024 Andrew D. Zonenberg and contributors                                                         *
+* Copyright (c) 2016-2026 Andrew D. Zonenberg and contributors                                                         *
 * All rights reserved.                                                                                                 *
 *                                                                                                                      *
 * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the     *
@@ -73,7 +73,7 @@ void ColoredSTDLogSink::PreprocessLine(std::string& line)
 	static string clear = "\033[0m";
 
 	//Bold red errors. If there's a colon after the message, do that too
-	for(auto s : red_strings)
+	for(auto& s : red_strings)
 	{
 		line = replace(s + ":", red, clear, line);
 		//line = replace(s, red + s + clear, line);
@@ -88,7 +88,7 @@ void ColoredSTDLogSink::PreprocessLine(std::string& line)
 	};
 
 	//Bold yellow warnings. If there's a colon after the message, do that too
-	for(auto s : yellow_strings)
+	for(auto& s : yellow_strings)
 	{
 		line = replace(s + ":", yellow, clear, line);
 		//line = replace(s, yellow + s + clear, line);
@@ -109,7 +109,7 @@ string ColoredSTDLogSink::replace(
 	const string& search,
 	const string& before,
 	const string& after,
-	string subject)
+	const string& subject)
 {
 	//If not found, return unchanged
 	size_t pos = subject.find(search);
